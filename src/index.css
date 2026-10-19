@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #f7f2e9;
+  --color-paper: #ede4d3;
+  --color-ink: #12100e;
+  --color-navy: #0e1b2e;
+  --color-navy-deep: #08111d;
+  --color-gold: #c6a15b;
+  --color-foil: #e3c88f;
+  --color-leaf: #8c6a2e;
+  --color-sepia: #4a4238;
+
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: #f7f2e9;
+    color: #12100e;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: #c6a15b;
+    color: #12100e;
+  }
+  a {
+    transition: color 0.35s ease, opacity 0.35s ease, border-color 0.35s ease,
+      background-color 0.35s ease;
+  }
+  :focus-visible {
+    outline: 1px solid #c6a15b;
+    outline-offset: 4px;
+  }
+}
+
+/* ── Letterpress label: tracked small caps ───────────────────────── */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  line-height: 1.4;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.label-sm {
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+
+/* ── Gold foil type & marks ──────────────────────────────────────── */
+.foil {
+  background-image: linear-gradient(
+    100deg,
+    #8c6a2e 0%,
+    #c6a15b 20%,
+    #f2e0b8 34%,
+    #c6a15b 48%,
+    #8c6a2e 66%,
+    #d9be86 84%,
+    #a5813f 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: foilSweep 9s ease-in-out infinite;
+}
+.foil-bg {
+  background-image: linear-gradient(
+    100deg,
+    #8c6a2e 0%,
+    #c6a15b 20%,
+    #f2e0b8 34%,
+    #c6a15b 48%,
+    #8c6a2e 66%,
+    #d9be86 84%,
+    #a5813f 100%
+  );
+  background-size: 220% 100%;
+  animation: foilSweep 9s ease-in-out infinite;
+}
+@keyframes foilSweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ── Paper grain ─────────────────────────────────────────────────── */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Hairline rules ──────────────────────────────────────────────── */
+.hairline-gold {
+  background-image: linear-gradient(
+    to right,
+    rgba(140, 106, 46, 0) 0%,
+    rgba(198, 161, 91, 0.85) 12%,
+    rgba(198, 161, 91, 0.85) 88%,
+    rgba(140, 106, 46, 0) 100%
+  );
+}
+
+/* ── Vertical spine type ─────────────────────────────────────────── */
+.vertical-rl {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* ── Ledger row hover ────────────────────────────────────────────── */
+.ledger-row {
+  transition: background-color 0.5s ease, padding-left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ledger-row:hover {
+  background-color: rgba(237, 228, 211, 0.55);
+}
+
+.deck-link {
+  position: relative;
+  display: inline-block;
+}
+.deck-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35em;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: currentColor;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.deck-link:hover::after,
+.deck-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .foil,
+  .foil-bg {
+    animation: none;
+    background-position: 30% 50%;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
